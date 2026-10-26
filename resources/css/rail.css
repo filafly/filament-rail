@@ -1,0 +1,323 @@
+/*
+ * The rail: a full-height dark column left of the sidebar. A near-black
+ * gradient with the primary hue cast through it reads as on-brand in both
+ * themes; `color()` tints it per panel or per tenant instead. Desktop only;
+ * below 64rem the sidebar is a drawer and keeps Filament's own controls.
+ *
+ * Plain CSS on Filament's color variables, so it works with any theme.
+ * Themes restyle it through the --fi-rail-* tokens.
+ */
+:root {
+    --fi-rail-width: 68px;
+    --fi-rail-from: color-mix(in oklch, var(--primary-950) 40%, oklch(0.29 0 0));
+    --fi-rail-to: color-mix(in oklch, var(--primary-950) 30%, oklch(0.16 0 0));
+    --fi-rail-foreground: oklch(0.97 0.01 293);
+}
+
+:root.dark {
+    --fi-rail-from: color-mix(in oklch, var(--primary-950) 40%, oklch(0.25 0 0));
+    --fi-rail-to: color-mix(in oklch, var(--primary-950) 30%, oklch(0.14 0 0));
+    --fi-rail-foreground: oklch(0.94 0.015 293);
+}
+
+.fi-rail {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: 30;
+    display: none;
+    width: var(--fi-rail-width);
+    flex-direction: column;
+    align-items: center;
+    background-image: linear-gradient(to bottom, var(--fi-rail-from), var(--fi-rail-to));
+    color: var(--fi-rail-foreground);
+}
+
+/* A tint replaces the hue with the given color, darkened toward the bottom
+   so light text stays legible on light brand colors too. */
+.fi-rail.fi-rail-tinted {
+    --fi-rail-from: color-mix(in oklch, var(--fi-rail-tint) 78%, black);
+    --fi-rail-to: color-mix(in oklch, var(--fi-rail-tint) 42%, black);
+    --fi-rail-foreground: white;
+}
+
+@media (min-width: 64rem) {
+    .fi-rail {
+        display: flex;
+    }
+}
+
+/* Logo: a translucent frame around a near-solid light tile. */
+.fi-rail-logo {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    padding-block: 1rem;
+    outline: none;
+}
+
+.fi-rail-logo-tile {
+    display: flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background-color: color-mix(in oklab, var(--gray-50) 35%, transparent);
+    padding: 3px;
+}
+
+.fi-rail-logo:focus-visible .fi-rail-logo-tile {
+    box-shadow: 0 0 0 2px color-mix(in oklab, white 60%, transparent);
+}
+
+.fi-rail-logo-tile > img,
+.fi-rail-logo-tile > .fi-rail-logo-initial {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: color-mix(in oklab, var(--gray-50) 90%, transparent);
+    object-fit: contain;
+    padding: 0.125rem;
+}
+
+.fi-rail-logo-initial {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--fi-rail-from);
+}
+
+/* Tenants: square tiles, the current one outlined. Scrolls when there are
+   more than fit. */
+.fi-rail-tenants {
+    display: flex;
+    min-height: 0;
+    width: 100%;
+    flex: 1 1 0%;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    overflow-y: auto;
+    padding-block: 0.75rem;
+    scrollbar-width: none;
+}
+
+.fi-rail-tenant {
+    position: relative;
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background-color: color-mix(in oklab, var(--fi-rail-foreground) 12%, transparent);
+    color: color-mix(in oklab, var(--fi-rail-foreground) 70%, transparent);
+    font-size: 0.75rem;
+    font-weight: 500;
+    outline: none;
+    transition: background-color 150ms, color 150ms;
+}
+
+.fi-rail-tenant:hover,
+.fi-rail-tenant:focus-visible {
+    background-color: color-mix(in oklab, var(--fi-rail-foreground) 20%, transparent);
+    color: var(--fi-rail-foreground);
+}
+
+.fi-rail-tenant.fi-active {
+    border-radius: 0.375rem;
+    background-color: var(--fi-rail-foreground);
+    color: var(--fi-rail-to);
+    outline: 2px solid var(--fi-rail-foreground);
+    outline-offset: 2px;
+}
+
+.fi-rail-tenant:focus-visible:not(.fi-active) {
+    outline: 2px solid color-mix(in oklab, var(--fi-rail-foreground) 60%, transparent);
+    outline-offset: 2px;
+}
+
+.fi-rail-tenant-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+}
+
+.fi-rail-tenant-status {
+    position: absolute;
+    inset-inline-end: -0.125rem;
+    bottom: -0.125rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--fi-rail-status);
+    box-shadow: 0 0 0 2px var(--fi-rail-from);
+}
+
+.fi-rail-tenant-register {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fi-rail-foreground) 25%, transparent);
+}
+
+.fi-rail-tenant-register .fi-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Bottom links. */
+.fi-rail-items {
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding-block: 0.75rem;
+}
+
+.fi-rail-item {
+    position: relative;
+    display: flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    color: color-mix(in oklab, var(--fi-rail-foreground) 70%, transparent);
+    outline: none;
+    transition: background-color 150ms, color 150ms;
+}
+
+.fi-rail-item:hover,
+.fi-rail-item:focus-visible {
+    background-color: color-mix(in oklab, white 10%, transparent);
+    color: var(--fi-rail-foreground);
+}
+
+.fi-rail-item.fi-active {
+    background-color: color-mix(in oklab, white 15%, transparent);
+    color: var(--fi-rail-foreground);
+}
+
+.fi-rail-item .fi-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: currentColor;
+}
+
+.fi-rail-item-dot {
+    position: absolute;
+    inset-inline-end: 0.5rem;
+    top: 0.5rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--primary-400);
+    box-shadow: 0 0 0 2px var(--fi-rail-to);
+}
+
+/* Make room for the rail on desktop, and move into it what it replaces: the
+   sidebar's bell, its tenant menu, and the rail links repeated for mobile. */
+@media (min-width: 64rem) {
+    .fi-body:has(> .fi-rail) .fi-layout {
+        padding-inline-start: var(--fi-rail-width);
+    }
+
+    .fi-body:has(> .fi-rail) .fi-sidebar:not(.fi-sidebar-open) {
+        inset-inline-start: var(--fi-rail-width);
+    }
+
+    .fi-body:has(> .fi-rail) .fi-rail-sidebar-items,
+    .fi-body:has(> .fi-rail.fi-rail-has-notifications) .fi-sidebar-database-notifications-btn,
+    .fi-body:has(> .fi-rail.fi-rail-has-tenants) .fi-sidebar .fi-tenant-menu {
+        display: none;
+    }
+}
+
+/* The current tenant, shown where the brand was. Desktop only, since the rail
+   is; below that, the sidebar's own tenant menu is back. */
+.fi-rail-current-tenant {
+    display: none;
+    min-width: 0;
+    flex: 1 1 0%;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    outline: none;
+    transition: background-color 75ms;
+}
+
+.fi-rail-current-tenant:hover,
+.fi-rail-current-tenant:focus-visible {
+    background-color: var(--gray-100);
+}
+
+:root.dark .fi-rail-current-tenant:hover,
+:root.dark .fi-rail-current-tenant:focus-visible {
+    background-color: color-mix(in oklab, white 5%, transparent);
+}
+
+.fi-rail-current-tenant .fi-tenant-avatar {
+    max-width: none;
+    flex-shrink: 0;
+}
+
+.fi-rail-current-tenant-text {
+    display: grid;
+    min-width: 0;
+    justify-items: start;
+    text-align: start;
+}
+
+.fi-rail-current-tenant-label {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: var(--gray-500);
+}
+
+.fi-rail-current-tenant-name {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--gray-950);
+}
+
+:root.dark .fi-rail-current-tenant-label {
+    color: var(--gray-400);
+}
+
+:root.dark .fi-rail-current-tenant-name {
+    color: white;
+}
+
+/* Hide the brand the rail stands in for, or the tenant has replaced, and
+   show the tenant in its place. The header keeps its collapse button. */
+@media (min-width: 64rem) {
+    .fi-body:has(> .fi-rail.fi-rail-hides-brand) .fi-sidebar-header-logo-ctn,
+    .fi-body:has(> .fi-rail.fi-rail-hides-brand) .fi-topbar-start > a:has(> .fi-logo),
+    .fi-body:has(> .fi-rail.fi-rail-hides-brand) .fi-topbar-start > .fi-logo {
+        display: none;
+    }
+
+    .fi-body:has(> .fi-rail) .fi-rail-current-tenant {
+        display: flex;
+    }
+
+    /* With nothing else in the header, the collapse button keeps to the
+       start rather than floating in the middle. */
+    .fi-body:has(> .fi-rail.fi-rail-hides-brand) .fi-sidebar-open .fi-sidebar-header {
+        justify-content: flex-start;
+    }
+}
