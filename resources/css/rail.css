@@ -224,7 +224,8 @@
 }
 
 /* Make room for the rail on desktop, and move into it what it replaces: the
-   sidebar's bell, its tenant menu, and the rail links repeated for mobile. */
+   panel's own bell (in the sidebar or the topbar), the sidebar's tenant menu,
+   and the rail links repeated for mobile. */
 @media (min-width: 64rem) {
     .fi-body:has(> .fi-rail) .fi-layout {
         padding-inline-start: var(--fi-rail-width);
@@ -236,6 +237,7 @@
 
     .fi-body:has(> .fi-rail) .fi-rail-sidebar-items,
     .fi-body:has(> .fi-rail.fi-rail-has-notifications) .fi-sidebar-database-notifications-btn,
+    .fi-body:has(> .fi-rail.fi-rail-has-notifications) .fi-topbar-database-notifications-btn,
     .fi-body:has(> .fi-rail.fi-rail-has-tenants) .fi-sidebar .fi-tenant-menu {
         display: none;
     }

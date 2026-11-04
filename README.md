@@ -7,10 +7,12 @@ A slim icon rail for Filament panels: your logo, tenant switching, and quick lin
 
 In a multi-tenant panel the rail becomes the home for tenancy. Every tenant the user belongs to is a tile, the current one is marked, and the rail can take on each tenant's brand color. On desktop it replaces the sidebar's tenant menu. On smaller screens it steps aside and Filament's own controls come back.
 
+![The rail beside a Filament panel's sidebar, with a logo tile, four tenants with status dots, a documentation link and the notifications bell](https://raw.githubusercontent.com/filafly/filament-rail/main/art/screenshot.png)
+
 ## Requirements
 
 - PHP 8.2+
-- Filament v4 or v5
+- Filament v4 or v5 (tested with 4.16 on Laravel 12 and 5.11 on Laravel 13)
 
 ## Installation
 
@@ -147,7 +149,7 @@ Pass a closure when an item's URL depends on the current tenant or request.
 
 ## Notifications
 
-When the panel has `databaseNotifications()`, the rail shows a bell that opens Filament's notifications panel, with a dot when there are unread notifications. The sidebar's own bell is hidden on desktop.
+When the panel has `databaseNotifications()`, the rail shows a bell that opens Filament's notifications panel, with a dot when there are unread notifications. Filament's own bell, in the sidebar or the topbar, is hidden on desktop.
 
 The dot reflects the unread count when the page loads.
 
@@ -212,6 +214,10 @@ use Filament\Support\Icons\Heroicon;
 ```bash
 composer test
 ```
+
+## From FilaFly
+
+FilaFly makes premium themes for Filament panels: Lucent, Prizm, Cypher and Citrus. [Browse the themes](https://filafly.com/themes?utm_source=github&utm_medium=readme&utm_campaign=rail).
 
 ## Credits
 
