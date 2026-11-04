@@ -5,6 +5,8 @@
 
 A slim icon rail for Filament panels: your logo, tenant switching, and quick links in a dark column beside the sidebar.
 
+Docs and screenshots: [filafly.com/plugins/filament-rail](https://filafly.com/plugins/filament-rail?utm_source=github&utm_medium=readme&utm_campaign=rail)
+
 In a multi-tenant panel the rail becomes the home for tenancy. Every tenant the user belongs to is a tile, the current one is marked, and the rail can take on each tenant's brand color. On desktop it replaces the sidebar's tenant menu. On smaller screens it steps aside and Filament's own controls come back.
 
 ![The rail beside a Filament panel's sidebar, with a logo tile, four tenants with status dots, a documentation link and the notifications bell](https://raw.githubusercontent.com/filafly/filament-rail/main/art/screenshot.png)
@@ -214,6 +216,8 @@ use Filament\Support\Icons\Heroicon;
 ```bash
 composer test
 ```
+
+`npm test` runs the same suite (after `composer update`); it exists so the ship gate can find the tests, and `package.json` is left out of Composer installs.
 
 ## From FilaFly
 
