@@ -3,7 +3,7 @@
 ## v1.0.2 - 2026-11-09
 
 - Added a security policy (`SECURITY.md`): which versions get fixes and how to report a vulnerability privately.
-- Dependabot now checks Composer and GitHub Actions updates once a month.
+- Dependabot now checks Composer, npm and GitHub Actions updates once a month, skipping releases younger than 7 days.
 - No code changes.
 
 ## v1.0.1 - 2026-11-04
